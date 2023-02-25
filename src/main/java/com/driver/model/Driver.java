@@ -4,7 +4,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Driver{
+@Entity
+@Table
+public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int driverId;
@@ -16,20 +18,8 @@ public class Driver{
     @JoinColumn
     private Cab cab;
 
-    @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
-    private List<TripBooking>tripBookingList=new ArrayList<>();
-
-    public Driver() {
-    }
-
-
-    public Driver(int driverId, String mobile, String password, Cab cab, List<TripBooking> tripBookingList) {
-        this.driverId = driverId;
-        this.mobile = mobile;
-        this.password = password;
-        this.cab = cab;
-        this.tripBookingList = tripBookingList;
-    }
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    List<TripBooking> tripBookingList = new ArrayList<>();
 
     public List<TripBooking> getTripBookingList() {
         return tripBookingList;
@@ -39,12 +29,19 @@ public class Driver{
         this.tripBookingList = tripBookingList;
     }
 
-    public Cab getCab() {
-        return cab;
+    public Driver(int driverId, String mobile, String password, Cab cab) {
+        this.driverId = driverId;
+        this.mobile = mobile;
+        this.password = password;
+        this.cab = cab;
     }
 
-    public void setCab(Cab cab) {
-        this.cab = cab;
+    public Driver() {
+    }
+
+    public Driver(String mobile, String password) {
+        this.mobile = mobile;
+        this.password = password;
     }
 
     public int getDriverId() {
@@ -69,5 +66,13 @@ public class Driver{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Cab getCab() {
+        return cab;
+    }
+
+    public void setCab(Cab cab) {
+        this.cab = cab;
     }
 }

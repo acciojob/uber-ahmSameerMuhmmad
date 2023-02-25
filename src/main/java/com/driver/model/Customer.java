@@ -4,7 +4,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer{
+@Entity
+@Table
+public class Customer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerId;
@@ -12,11 +15,9 @@ public class Customer{
     private String mobile;
     private String password;
 
-    @OneToMany(mappedBy = "tripBooking",cascade = CascadeType.ALL)
-    private List<TripBooking>tripBookingList=new ArrayList<>();
 
-    public Customer() {
-    }
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    List<TripBooking> tripBookingList = new ArrayList<>();
 
     public Customer(int customerId, String mobile, String password, List<TripBooking> tripBookingList) {
         this.customerId = customerId;
@@ -31,6 +32,15 @@ public class Customer{
 
     public void setTripBookingList(List<TripBooking> tripBookingList) {
         this.tripBookingList = tripBookingList;
+    }
+
+    public Customer(int customerId, String mobile, String password) {
+        this.customerId = customerId;
+        this.mobile = mobile;
+        this.password = password;
+    }
+
+    public Customer() {
     }
 
     public int getCustomerId() {
